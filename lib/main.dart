@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
-
+import 'cv.dart';
 void main() {
   runApp(const RestaurantApp());
 }
@@ -13,7 +13,7 @@ class RestaurantApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'My Restaurant',
-      home: const LoginPage(),
+      home: const CVPage(),
     );
   }
 }
