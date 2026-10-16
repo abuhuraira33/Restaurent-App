@@ -33,6 +33,23 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  double _containerHeight = 100;
+  double _containerWidth = 100;
+  bool _showLoginForm = false;
+  double _buttonWidth = 300;
+  void _animateContainer() { //container ka size change ho ga
+    setState(() {
+      _showLoginForm = !_showLoginForm;
+
+      if (_showLoginForm) {
+        _containerHeight = 150;
+        _containerWidth = 250;
+      } else {
+        _containerHeight = 100;
+        _containerWidth = 100;
+      }
+    });
+  }
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -85,11 +102,26 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
-                      Icons.lock_outline,
-                      size: 65,
-                      color: Colors.blue,
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 800),
+                      curve: Curves.easeInOut,
+                      height: _containerHeight,
+                      width: _containerWidth,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: IconButton(
+                        onPressed: _animateContainer,
+                        icon: const Icon(
+                          Icons.lock_outline,
+                          color: Colors.white,
+                          size: 40,
+                        ),
+                      ),
                     ),
+                    const SizedBox(height: 16),
+
                     const SizedBox(height: 16),
                     const Text(
                       'Welcome Back',
@@ -152,11 +184,18 @@ class _LoginPageState extends State<LoginPage> {
 
                     const SizedBox(height: 24),
 
-                    SizedBox(
-                      width: double.infinity,
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      width: _buttonWidth,
                       height: 48,
                       child: ElevatedButton(
-                        onPressed: _login,
+                        onPressed: () {
+                          setState(() {
+                            _buttonWidth = _buttonWidth == 300 ? 250 : 300;
+                          });
+
+                          _login();
+                        },
                         child: const Text(
                           'LOGIN',
                           style: TextStyle(fontSize: 16),
